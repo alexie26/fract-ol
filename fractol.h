@@ -6,7 +6,7 @@
 /*   By: roalexan <roalexan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:00:59 by roalexan          #+#    #+#             */
-/*   Updated: 2025/02/25 18:49:40 by roalexan         ###   ########.fr       */
+/*   Updated: 2025/02/25 20:14:26 by roalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,12 @@ typedef struct s_fractal
 } t_fractal;
 
 double	ft_atodbl(char *s);
-
+unsigned int	create_color(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+void	color_image(mlx_image_t *img);
 void	esc_key(mlx_key_data_t keydata, void *param);
+
+int	ft_mandelbrot(double real, double imag, int max_iter);
+int ft_julia(double real, double imag, double j_real, double j_imag, int max_i);
+void fractal_render(t_fractal *fractal);
 
 #endif
