@@ -8,8 +8,8 @@
 # include "MLX42/include/MLX42/MLX42.h"
 # include "libft/libft.h"
 
-# define WIDTH 800
-# define HEIGHT 600
+# define WIDTH 1920
+# define HEIGHT 1080
 # define BLACK 0x000000FF
 # define WHITE 0xFFFFFFFF
 # define GOLD 0xFFD700FF
@@ -88,13 +88,17 @@ typedef struct s_fractal
     double	julia_x;
     double	julia_y;
     int		type;
+	int		widht;
+	int		height;
 } t_fractal;
 
-double	atodbl(char *s); //converts string into double 0.00etc
+double	ft_atodbl(char *s); //converts string into double 0.00etc
+
+
 unsigned int	create_color(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 void	color_image(mlx_image_t *img);
 void	esc_key(mlx_key_data_t keydata, void *param);
-int	window(void);
+int		window(t_fractal *fractal);
 
 int	main(int argc, char **argv);
 //render

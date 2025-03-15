@@ -1,0 +1,9 @@
+
+MANDELBROT
+z = z^2 + c
+z initially is (0,0)
+c is the actual point
+
+JULIA
+./fractol julia <real> <imaginary>
+z = pixel_point + constant;

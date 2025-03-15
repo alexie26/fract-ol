@@ -9,6 +9,8 @@ SRCS =	utils.c	\
 			fractal_render.c	\
 			window.c	\
 			color_image.c 	\
+			julia.c 	\
+			mandelbrot.c	\
 			
 
 COMPILER = cc
