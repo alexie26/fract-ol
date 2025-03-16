@@ -32,10 +32,10 @@ typedef struct s_fractal
     double	max_real;
     double	min_imag;
     double	max_imag;
-    
-    int	color_scheme;
-    int	color_shift;
 
+	double 	x;
+	double	y;
+	
     double	zoom_factor;
     double	center_real;
     double	center_imag;
@@ -49,11 +49,13 @@ typedef struct s_fractal
 
 //shapes and colors and window etc
 int				ft_max_iterations(t_fractal *fractal);
+void			ft_zoom(t_fractal *fractal, double	zoom);
+int				ft_max_iterations(t_fractal *fractal);
 unsigned int	create_color(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 void			color_image(mlx_image_t *img);
-void			esc_key(mlx_key_data_t keydata, void *param);
+void			event_key(mlx_key_data_t keydata, void *param);
 int				window(t_fractal *fractal);
-
+void			mouse_scroll(double xd, double yd, void *param);
 
 double	ft_atodbl(char *s); //converts string into double 0.00etc
 
