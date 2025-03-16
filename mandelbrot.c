@@ -6,11 +6,22 @@
 /*   By: roalexan <roalexan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:58:45 by roalexan          #+#    #+#             */
-/*   Updated: 2025/03/15 17:59:11 by roalexan         ###   ########.fr       */
+/*   Updated: 2025/03/16 19:13:07 by roalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+// void	mandelbrot(t_fractal *fractal)
+// {
+// 	int	i;
+// 	double temp;
+// 	int	max_iter;
+
+// 	 i = 0;
+// 	 max_iter = 
+// }
+
 
 int	ft_mandelbrot(double real, double imag, int max_iter)
 {

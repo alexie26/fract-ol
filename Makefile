@@ -4,11 +4,10 @@ USER = $(shell whoami)
 OS = $(shell uname)
 
 SRCS =	utils.c	\
-			fractol_main.c		\
+			main.c		\
 			fractal_init.c		\
 			fractal_render.c	\
-			window.c	\
-			color_image.c 	\
+			shapes_and_colors.c	\
 			julia.c 	\
 			mandelbrot.c	\
 			

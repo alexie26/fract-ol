@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window.c                                           :+:      :+:    :+:   */
+/*   shapes_and_colors.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roalexan <roalexan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 16:22:57 by roalexan          #+#    #+#             */
-/*   Updated: 2025/03/15 19:27:34 by roalexan         ###   ########.fr       */
+/*   Updated: 2025/03/16 18:56:26 by roalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ void	color_image(mlx_image_t *img)
 
 	x = 0;
 	y = 0;
-
-	color = create_color(255, 0,5,50);
-
+	color = create_color(255, 0, 5, 50);
 	while (y < img->height)
 	{
 		while (x < img->width)
@@ -38,6 +36,22 @@ void	color_image(mlx_image_t *img)
 		y++;
 		x = 0;
 	}
+}
+// calculates the max num of iterations for each point in the fractal. For fractal rendering and zoom 
+// max_real and min_real are for limits on the real axis (x)
+// x_range for the distance 
+int	ft_max_iterations(t_fractal *fractal)
+{
+	int		max_iter;
+	double	x_range;
+
+	x_range = fractal->max_real - fractal->min_real;
+	max_iter = 100 + 50 * (int)log2(2.0 / x_range);
+	if (max_iter < 100)
+		max_iter = 100;
+	if (max_iter > 2000)
+		max_iter = 2000;
+	return (max_iter);
 }
 
 void	esc_key(mlx_key_data_t keydata, void *param)
@@ -60,5 +74,5 @@ int	window(t_fractal *fractal)
 	mlx_key_hook(fractal->mlx, &esc_key, fractal);
 	// INTERRUPTS the program at the exact time the key is pressed
 	// mlx_loop_hook();	// gets executed ONCE EVERY LOOP. no interrupt.1
-	return(0);
+	return (0);
 }

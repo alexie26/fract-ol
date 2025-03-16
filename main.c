@@ -6,7 +6,7 @@
 /*   By: roalexan <roalexan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 17:18:05 by roalexan          #+#    #+#             */
-/*   Updated: 2025/03/15 19:27:08 by roalexan         ###   ########.fr       */
+/*   Updated: 2025/03/16 17:21:55 by roalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,6 @@ int	main(int argc, char **argv)
 			ft_putstr_fd("Usage:\n ./fractol mandelbrot\n ./fractol julia <real_param> <imag_param>\n", STDERR_FILENO);
 			return (EXIT_FAILURE);
 		}
-		// fractal.mlx = mlx_init(WIDTH, HEIGHT, "fractol", false);
-		// if (!fractal.mlx)
-		// 	return (0);
-		// fractal.img = mlx_new_image(fractal.mlx, WIDTH, HEIGHT);
-		// mlx_image_to_window(fractal.mlx, fractal.img, 0, 0);
-		// mlx_key_hook(fractal.mlx, &esc_key, fractal.mlx);
-		// mlx_loop(fractal.mlx);
 		window(fractal);
 		fractal_render(fractal);
 		mlx_loop(fractal->mlx); // main loop
