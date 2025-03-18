@@ -24,7 +24,8 @@ all: MLX42 $(NAME)
 
 $(NAME): $(OBJS)
 	@make -C libft --silent
-	@$(COMPILER) $(CFLAGS) -o $(NAME) $(OBJS) ./MLX42/build/libmlx42.a libft/libft.a $(MLX_FLAGS)
+	@make -C ft_printf --silent
+	@$(COMPILER) $(CFLAGS) -o $(NAME) $(OBJS) ./MLX42/build/libmlx42.a libft/libft.a ft_printf/libftprintf.a $(MLX_FLAGS)
 
 MLX42:
 	@if [ ! -d "MLX42" ]; then git clone https://github.com/codam-coding-college/MLX42.git; fi
@@ -32,7 +33,7 @@ MLX42:
 
 clean:
 	@rm -f $(OBJS)
-	@cd libft && make fclean && cd ..
+	@cd libft ft_prinf && make fclean && cd ..
 
 fclean: clean
 	@rm -rf MLX42

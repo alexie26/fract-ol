@@ -7,6 +7,7 @@
 # include <math.h>
 # include "MLX42/include/MLX42/MLX42.h"
 # include "libft/libft.h"
+# include "ft_printf/ft_printf.h"
 
 # define WIDTH 1920
 # define HEIGHT 1080
@@ -14,35 +15,37 @@
 # define WHITE 0xFFFFFFFF
 # define GOLD 0xFFD700FF
 
-typedef struct s_complex
-{
-	double x; //real
-	double y; // 
-}	t_complex;
 
 typedef struct s_fractal
 {
-    char	*name;
+	char	*name;
 
-    mlx_t	*mlx;
-    mlx_image_t *img;
+	mlx_t	*mlx;
+	mlx_image_t *img;
 
-    int		max_iterations;
-    double	min_real;
-    double	max_real;
-    double	min_imag;
-    double	max_imag;
+	int		max_iterations;
+	double	min_real;
+	double	max_real;
+	double	min_imag;
+	double	max_imag;
 
-	double 	x;
-	double	y;
-	
-    double	zoom_factor;
-    double	center_real;
-    double	center_imag;
+	double 	real;
+	double	imag;
 
-    double	julia_x;
-    double	julia_y;
-    int		type;
+	double 	i_real;
+	double 	i_imag;
+
+	double 	c_real;
+	double 	c_imag;
+
+	double	zoom_factor;
+	double	center_real;
+	double	center_imag;
+
+
+	double	julia_x;
+	double	julia_y;
+	int		type;
 	int		widht;
 	int		height;
 } t_fractal;
@@ -53,9 +56,11 @@ void			ft_zoom(t_fractal *fractal, double	zoom);
 int				ft_max_iterations(t_fractal *fractal);
 unsigned int	create_color(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 void			color_image(mlx_image_t *img);
-void			event_key(mlx_key_data_t keydata, void *param);
+void			event_key(void *param);
 int				window(t_fractal *fractal);
 void			mouse_scroll(double xd, double yd, void *param);
+void 			boundries(t_fractal *fractal);
+void			arrow_keys(mlx_key_data_t keydata, void *param);
 
 double	ft_atodbl(char *s); //converts string into double 0.00etc
 
@@ -64,7 +69,8 @@ double	ft_atodbl(char *s); //converts string into double 0.00etc
 int	main(int argc, char **argv);
 
 
-int	ft_mandelbrot(double real, double imag, int max_iter);
+// int	ft_mandelbrot(double real, double imag, int max_iter);
+void	ft_mandelbrot(t_fractal *fractal);
 int ft_julia(double real, double imag, double j_real, double j_imag, int max_i);
 void fractal_render(t_fractal *fractal);
 

@@ -6,7 +6,7 @@
 /*   By: roalexan <roalexan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 17:15:45 by roalexan          #+#    #+#             */
-/*   Updated: 2025/03/16 19:12:28 by roalexan         ###   ########.fr       */
+/*   Updated: 2025/03/18 20:38:25 by roalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	fractal_render(t_fractal *fractal)
 			imag = fractal->min_imag + y * (fractal->max_imag
 					- fractal->min_imag) / fractal->height;
 			if (fractal->type == 1)
-				i = ft_mandelbrot(real, imag, fractal->max_iterations);
+				i = ft_mandelbrot(fractal);
 			else if (fractal->type == 2)
 				i = ft_julia(real, imag, fractal->julia_x, fractal->julia_y,
 						fractal->max_iterations);
