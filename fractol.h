@@ -15,34 +15,36 @@
 # define WHITE 0xFFFFFFFF
 # define GOLD 0xFFD700FF
 
+typedef	struct s_pattern
+{
+	char *name;
+	double	c_x;
+	double	c_y;
+}	t_pattern;
 
 typedef struct s_fractal
 {
-	char	*name;
+	char		*name;
 
-	mlx_t	*mlx;
+	mlx_t		*mlx;
 	mlx_image_t *img;
 
 	int		max_iterations;
-	double	min_real;
-	double	max_real;
-	double	min_imag;
-	double	max_imag;
+	
+	double	min_x;
+	double	max_x;
+	double	min_y;
+	double	max_y;
 
-	double 	real;
-	double	imag;
+	double 	x;
+	double	y;
 
-	double 	i_real;
-	double 	i_imag;
-
-	double 	c_real;
-	double 	c_imag;
+	double 	i_x;
+	double 	i_r;
 
 	double	zoom_factor;
-	double	center_real;
-	double	center_imag;
-
-
+	
+	int		col;
 	double	julia_x;
 	double	julia_y;
 	int		type;
@@ -51,10 +53,10 @@ typedef struct s_fractal
 } t_fractal;
 
 //shapes and colors and window etc
-int				ft_max_iterations(t_fractal *fractal);
-void			ft_zoom(t_fractal *fractal, double	zoom);
-int				ft_max_iterations(t_fractal *fractal);
-unsigned int	create_color(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+int				ft_max_iterations(t_fractal *f);
+void			ft_zoom(t_fractal *f, double	zoom);
+int				ft_max_iterations(t_fractal *f);
+unsigned int	create_color(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 void			color_image(mlx_image_t *img);
 void			event_key(void *param);
 int				window(t_fractal *fractal);
@@ -69,10 +71,10 @@ double	ft_atodbl(char *s); //converts string into double 0.00etc
 int	main(int argc, char **argv);
 
 
-// int	ft_mandelbrot(double real, double imag, int max_iter);
-void	ft_mandelbrot(t_fractal *fractal);
+int	ft_mandelbrot(double real, double imag, int max_iter);
+// void	ft_mandelbrot(t_fractal *fractal);
 int ft_julia(double real, double imag, double j_real, double j_imag, int max_i);
-void fractal_render(t_fractal *fractal);
+int		 fractal_render(t_fractal *fractal);
 
 void	fractal_init(t_fractal *fractal, char **argv);
 int	fractal_type(char **argv);

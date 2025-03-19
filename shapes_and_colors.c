@@ -6,7 +6,7 @@
 /*   By: roalexan <roalexan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 16:22:57 by roalexan          #+#    #+#             */
-/*   Updated: 2025/03/18 20:44:38 by roalexan         ###   ########.fr       */
+/*   Updated: 2025/03/19 20:10:08 by roalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,76 +55,89 @@ void	color_image(mlx_image_t *img)
 // }
 
 
-void	ft_zoom(t_fractal *fractal, double	zoom)
+void	ft_zoom(t_fractal *f, double	zoom)
 {
 	int32_t	mouse_x;
 	int32_t	mouse_y;
 	double			mouse_cx;
 	double			mouse_cy;
 
-	mlx_get_mouse_pos(fractal->mlx, &mouse_x, &mouse_y);
-	mouse_cx = fractal->min_real + (fractal->max_real - fractal->min_real) * (mouse_x / (double)WIDTH);
-	mouse_cy = fractal->min_imag + (fractal->max_imag - fractal->min_imag) * (mouse_y / (double)WIDTH);
-	fractal->min_real = mouse_cx - (mouse_cx - fractal->min_real) / zoom;
-	fractal->max_real = mouse_cx + (fractal->max_real - mouse_cx) / zoom;
-	fractal->min_imag = mouse_cy - (mouse_cy - fractal->min_imag) / zoom;
-	fractal->max_imag = mouse_cy + (fractal->max_imag - mouse_cy) / zoom;
-	fractal_render(fractal);
+	mlx_get_mouse_pos(f->mlx, &mouse_x, &mouse_y);
+	mouse_cx = f->min_x + (f->max_x - f->min_x) * (mouse_x / (double)WIDTH);
+	mouse_cy = f->min_y + (f->max_y - f->min_y) * (mouse_y / (double)WIDTH);
+	f->min_x = mouse_cx - (mouse_cx - f->min_x) / zoom;
+	f->max_x = mouse_cx + (f->max_x - mouse_cx) / zoom;
+	f->min_y = mouse_cy - (mouse_cy - f->min_y) / zoom;
+	f->max_y = mouse_cy + (f->max_y - mouse_cy) / zoom;
+	f->col = 1;
+	fractal_render(f);
 	// color_image(fractal->img);
 }
 // esc key exit, zoom with + and -, change color when SPACE KEY is pressed
 
 void	function(void *param)
 {
-	t_fractal	*fractal;
+	t_fractal	*f;
 
-	fractal = (t_fractal *)param;
-	if (mlx_is_key_down(fractal->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(fractal->mlx);
-	if (mlx_is_key_down(fractal->mlx, MLX_KEY_UP))
+	f = (t_fractal *)param;
+	if (mlx_is_key_down(f->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(f->mlx);
+	if (mlx_is_key_down(f->mlx, MLX_KEY_UP))
 	{
-		fractal->center_imag -= 0.1 * fractal->zoom_factor;
-		fractal_render(fractal);
+		f->y -= 0.1 * f->zoom_factor;
+		fractal_render(f);
 	}
-	else if (mlx_is_key_down(fractal->mlx, MLX_KEY_DOWN))
+	else if (mlx_is_key_down(f->mlx, MLX_KEY_DOWN))
 	{
-		fractal->center_imag += 0.1 * fractal->zoom_factor;
-		fractal_render(fractal);
+		f->y += 0.1 * f->zoom_factor;
+		fractal_render(f);
 	}
-	if (mlx_is_key_down(fractal->mlx, MLX_KEY_LEFT))
+	if (mlx_is_key_down(f->mlx, MLX_KEY_LEFT))
 	{
-		fractal->center_imag -= 0.1 * fractal->zoom_factor;
-		fractal_render(fractal);
+		f->x -= 0.1 * f->zoom_factor;
+		fractal_render(f);
 	}
-	else if (mlx_is_key_down(fractal->mlx, MLX_KEY_RIGHT))
+	else if (mlx_is_key_down(f->mlx, MLX_KEY_RIGHT))
 	{
-		fractal->center_imag += 0.1 * fractal->zoom_factor;
-		fractal_render(fractal);
+		f->x += 0.1 * f->zoom_factor;
+		fractal_render(f);
 	}
 }
 void	event_key(void *param)
 {
 	function(param);
-	t_fractal	*fractal;
+	t_fractal	*f;
 
-	fractal = (t_fractal *)param;
+	f = (t_fractal *)param;
 
-	if (mlx_is_key_down(fractal->mlx, MLX_KEY_KP_ADD))
-		fractal->max_iterations += 10;
-	else if (mlx_is_key_down(fractal->mlx, MLX_KEY_KP_SUBTRACT))
-		fractal->max_iterations -= 10;
+	if (mlx_is_key_down(f->mlx, MLX_KEY_KP_ADD))
+	{
+		f->max_iterations += 10;
+		fractal_render(f);
+	}
+	else if (mlx_is_key_down(f->mlx, MLX_KEY_KP_SUBTRACT))
+	{
+		f->max_iterations -= 10;
+		fractal_render(f);
+	}
+	if (mlx_is_key_down(f->mlx, MLX_KEY_SPACE))
+	{
+		f->col++;
+		fractal_render(f);
+	}
 }
 //handling mouse scroll, zooms and zoom out 
 void	mouse_scroll(double xd, double yd, void *param)
 {
-	t_fractal *fractal;
+	t_fractal *f;
 
 	(void)xd;
-	fractal = (t_fractal *)param;
+	f = (t_fractal *)param;
 	if (yd > 0)
-		ft_zoom(fractal, 1.1);
+		ft_zoom(f, 1.1);
 	else if (yd < 0)
-		ft_zoom(fractal, 0.9);
+		ft_zoom(f, 0.9);
+	fractal_render(f);
 }
 
 int	window(t_fractal *fractal)

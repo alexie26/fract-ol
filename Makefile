@@ -33,7 +33,8 @@ MLX42:
 
 clean:
 	@rm -f $(OBJS)
-	@cd libft ft_prinf && make fclean && cd ..
+	@cd ft_printf && make fclean && cd ..
+	@cd libft && make fclean && cd ..
 
 fclean: clean
 	@rm -rf MLX42
