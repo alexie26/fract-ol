@@ -15,12 +15,11 @@
 # define WHITE 0xFFFFFFFF
 # define GOLD 0xFFD700FF
 
-typedef	struct s_pattern
+typedef	struct s_complex
 {
-	char *name;
 	double	c_x;
 	double	c_y;
-}	t_pattern;
+}	t_complex;
 
 typedef struct s_fractal
 {
@@ -36,11 +35,14 @@ typedef struct s_fractal
 	double	min_y;
 	double	max_y;
 
+	double shift_y;
+	double shift_x;
+
 	double 	x;
 	double	y;
 
-	double 	i_x;
-	double 	i_r;
+	double 	z_x;
+	double 	z_y;
 
 	double	zoom_factor;
 	
@@ -71,9 +73,9 @@ double	ft_atodbl(char *s); //converts string into double 0.00etc
 int	main(int argc, char **argv);
 
 
-int	ft_mandelbrot(double real, double imag, int max_iter);
+int	ft_mandelbrot(t_fractal *f);
 // void	ft_mandelbrot(t_fractal *fractal);
-int ft_julia(double real, double imag, double j_real, double j_imag, int max_i);
+int ft_julia(t_fractal *f);
 int		 fractal_render(t_fractal *fractal);
 
 void	fractal_init(t_fractal *fractal, char **argv);

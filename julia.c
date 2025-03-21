@@ -6,36 +6,32 @@
 /*   By: roalexan <roalexan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:58:17 by roalexan          #+#    #+#             */
-/*   Updated: 2025/03/16 14:13:50 by roalexan         ###   ########.fr       */
+/*   Updated: 2025/03/21 19:19:34 by roalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int ft_julia(double real, double imag, double j_real, double j_imag, int max_i)
+int ft_julia(t_fractal *f)
 {
-	double z_real;
-	double z_imag;
-	double z_real_sqr;
-	double z_imag_sqr;
-	double temp_real;
+	t_complex c;
+
 	int	i;
 
-	z_real = real;
-	z_imag = imag;
-	z_real_sqr = z_real * z_real;
-	z_imag_sqr = z_imag * z_imag;
 	i = 0;
+	// f->z_x = 0.0;
+	// f->z_y = 0.0;
+	c.c_x = f->julia_x;
+	c.c_y = f->julia_y;
 	
-	while (z_real_sqr + z_imag_sqr <= 4.0 && i < max_i)
+	while (i <= f->max_iterations)
 	{
-		temp_real = z_real_sqr - z_imag_sqr + j_real;
-		z_imag = 2 * z_real * z_imag + j_imag;
-		z_real = temp_real;
-
-		z_real_sqr = z_real * z_real;
-		z_imag_sqr = z_imag * z_imag;
-
+		// f->z_y = 2 * f->z_x * f->z_y + zx_sqr; 
+		// f->z_x = zx_sqr - zy_sqr + zy_sqr;
+		f->z_x = ((f->z_x * f->z_x) - (f->z_y * f->z_y)) + ((f->z_x * f->z_x) - (f->z_y * f->z_y));
+		f->z_y = ((2 * f->z_x * f->z_y) + (2 * f->z_x * f->z_y));
+		if ((f->z_y * f->z_y) + (f->z_y * f->z_y) > 4)
+			return (i);
 		i++;
 	}
 	return (i);

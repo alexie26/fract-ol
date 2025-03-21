@@ -6,7 +6,7 @@
 /*   By: roalexan <roalexan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 16:22:57 by roalexan          #+#    #+#             */
-/*   Updated: 2025/03/19 20:10:08 by roalexan         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:28:08 by roalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	color_image(mlx_image_t *img)
 // 	int		max_iter;
 // 	double	x_range;
 
-// 	x_range = fractal->max_real - fractal->min_real;
+// 	x_range = fractal->max_x - fractal->min_y;
 // 	max_iter = 100 + 50 * (int)log2(2.0 / x_range);
 // 	if (max_iter < 100)
 // 		max_iter = 100;
@@ -84,22 +84,22 @@ void	function(void *param)
 		mlx_close_window(f->mlx);
 	if (mlx_is_key_down(f->mlx, MLX_KEY_UP))
 	{
-		f->y -= 0.1 * f->zoom_factor;
+		f->shift_y -= 0.1;
 		fractal_render(f);
 	}
 	else if (mlx_is_key_down(f->mlx, MLX_KEY_DOWN))
 	{
-		f->y += 0.1 * f->zoom_factor;
+		f->shift_y += 0.1;
 		fractal_render(f);
 	}
 	if (mlx_is_key_down(f->mlx, MLX_KEY_LEFT))
 	{
-		f->x -= 0.1 * f->zoom_factor;
+		f->shift_x -= 0.1;
 		fractal_render(f);
 	}
 	else if (mlx_is_key_down(f->mlx, MLX_KEY_RIGHT))
 	{
-		f->x += 0.1 * f->zoom_factor;
+		f->shift_x += 0.1;
 		fractal_render(f);
 	}
 }
@@ -122,7 +122,7 @@ void	event_key(void *param)
 	}
 	if (mlx_is_key_down(f->mlx, MLX_KEY_SPACE))
 	{
-		f->col++;
+		f->col += 10;
 		fractal_render(f);
 	}
 }
