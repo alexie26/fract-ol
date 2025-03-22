@@ -6,7 +6,7 @@
 /*   By: roalexan <roalexan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 16:22:57 by roalexan          #+#    #+#             */
-/*   Updated: 2025/03/21 17:28:08 by roalexan         ###   ########.fr       */
+/*   Updated: 2025/03/22 21:11:10 by roalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,6 @@ void	color_image(mlx_image_t *img)
 		x = 0;
 	}
 }
-// calculates the max num of iterations for each point in the fractal. For fractal rendering and zoom 
-// max_real and min_real are for limits on the real axis (x)
-// x_range for 
-// int	ft_max_iterations(t_fractal *fractal)
-// {
-// 	int		max_iter;
-// 	double	x_range;
-
-// 	x_range = fractal->max_x - fractal->min_y;
-// 	max_iter = 100 + 50 * (int)log2(2.0 / x_range);
-// 	if (max_iter < 100)
-// 		max_iter = 100;
-// 	if (max_iter > 2000)
-// 		max_iter = 2000;
-// 	return (max_iter);
-// }
-
 
 void	ft_zoom(t_fractal *f, double	zoom)
 {
@@ -64,7 +47,7 @@ void	ft_zoom(t_fractal *f, double	zoom)
 
 	mlx_get_mouse_pos(f->mlx, &mouse_x, &mouse_y);
 	mouse_cx = f->min_x + (f->max_x - f->min_x) * (mouse_x / (double)WIDTH);
-	mouse_cy = f->min_y + (f->max_y - f->min_y) * (mouse_y / (double)WIDTH);
+	mouse_cy = f->min_y + (f->max_y - f->min_y) * (mouse_y / (double)HEIGHT);
 	f->min_x = mouse_cx - (mouse_cx - f->min_x) / zoom;
 	f->max_x = mouse_cx + (f->max_x - mouse_cx) / zoom;
 	f->min_y = mouse_cy - (mouse_cy - f->min_y) / zoom;
@@ -73,78 +56,12 @@ void	ft_zoom(t_fractal *f, double	zoom)
 	fractal_render(f);
 	// color_image(fractal->img);
 }
-// esc key exit, zoom with + and -, change color when SPACE KEY is pressed
-
-void	function(void *param)
-{
-	t_fractal	*f;
-
-	f = (t_fractal *)param;
-	if (mlx_is_key_down(f->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(f->mlx);
-	if (mlx_is_key_down(f->mlx, MLX_KEY_UP))
-	{
-		f->shift_y -= 0.1;
-		fractal_render(f);
-	}
-	else if (mlx_is_key_down(f->mlx, MLX_KEY_DOWN))
-	{
-		f->shift_y += 0.1;
-		fractal_render(f);
-	}
-	if (mlx_is_key_down(f->mlx, MLX_KEY_LEFT))
-	{
-		f->shift_x -= 0.1;
-		fractal_render(f);
-	}
-	else if (mlx_is_key_down(f->mlx, MLX_KEY_RIGHT))
-	{
-		f->shift_x += 0.1;
-		fractal_render(f);
-	}
-}
-void	event_key(void *param)
-{
-	function(param);
-	t_fractal	*f;
-
-	f = (t_fractal *)param;
-
-	if (mlx_is_key_down(f->mlx, MLX_KEY_KP_ADD))
-	{
-		f->max_iterations += 10;
-		fractal_render(f);
-	}
-	else if (mlx_is_key_down(f->mlx, MLX_KEY_KP_SUBTRACT))
-	{
-		f->max_iterations -= 10;
-		fractal_render(f);
-	}
-	if (mlx_is_key_down(f->mlx, MLX_KEY_SPACE))
-	{
-		f->col += 10;
-		fractal_render(f);
-	}
-}
-//handling mouse scroll, zooms and zoom out 
-void	mouse_scroll(double xd, double yd, void *param)
-{
-	t_fractal *f;
-
-	(void)xd;
-	f = (t_fractal *)param;
-	if (yd > 0)
-		ft_zoom(f, 1.1);
-	else if (yd < 0)
-		ft_zoom(f, 0.9);
-	fractal_render(f);
-}
 
 int	window(t_fractal *fractal)
 {
 	mlx_set_setting(MLX_STRETCH_IMAGE, true);
-	fractal->mlx = mlx_init(1920, 1080, "fract-ol", true);
-	fractal->img = mlx_new_image(fractal->mlx, 1920, 1080);
+	fractal->mlx = mlx_init(fractal->widht, fractal->height, "fract-ol", true);
+	fractal->img = mlx_new_image(fractal->mlx, fractal->widht, fractal->height);
 	mlx_image_to_window(fractal->mlx, fractal->img, 0, 0);
 	mlx_loop_hook(fractal->mlx, &event_key, fractal);
 	mlx_scroll_hook(fractal->mlx, &mouse_scroll, fractal);
@@ -152,3 +69,4 @@ int	window(t_fractal *fractal)
 	// mlx_loop_hook(fractal->mlx, &my_loop,fractal);	// gets executed ONCE EVERY LOOP. no interrupt.1
 	return (0);
 }
+

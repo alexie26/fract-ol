@@ -8,9 +8,8 @@ SRCS =	utils.c	\
 			fractal_init.c		\
 			fractal_render.c	\
 			shapes_and_colors.c	\
-			julia.c 	\
-			mandelbrot.c	\
-			
+			fractals.c 			\
+			keyboard_mouse.c 	\
 
 COMPILER = cc
 OBJS_DIR = objs/
