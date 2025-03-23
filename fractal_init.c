@@ -6,62 +6,59 @@
 /*   By: roalexan <roalexan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 12:55:42 by roalexan          #+#    #+#             */
-/*   Updated: 2025/03/22 20:37:16 by roalexan         ###   ########.fr       */
+/*   Updated: 2025/03/23 21:18:54 by roalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-
-void	fractal_init(t_fractal *fractal, char **argv)
+void	set_defaults(t_fractal *f)
 {
-	fractal->max_iterations = 100;
-	fractal->min_x = -2.0;
-	fractal->max_x = 2.0;
-	fractal->min_y = -2.0;
-	fractal->max_y = 2.0;
-	fractal->widht = 1000;
-	fractal->height = 1000;
-	if (fractal->type == 1)
-		fractal->x = -0.5;
-	else if (fractal->type == 2) //TODO add check for argv 2 and 3, not number, not valid etc.
-	{
-		fractal->julia_x = ft_atodbl(argv[2]);
-		fractal->julia_y = ft_atodbl(argv[3]);
-	}
-	else if (fractal->type == 3)
-		exit(1);
-	else
-		exit(2);
+	if (!f)
+		return ;
+	f->max_iterations = 100;
+	f->zoom_factor = 1.0;
+	f->shift_x = 0.0;
+	f->shift_y = 0.0;
+	f->widht = 1000;
+	f->height = 1000;
+	f->col = 0;
+	f->min_x = -2.0;
+	f->max_x = 2.0;
+	f->min_y = -2.0;
+	f->max_y = 2.0;
+	f->x = 0.0;
+	f->y = 0.0;
+	f->z_x = 0.0;
+	f->z_y = 0.0;
+	f->julia_x = 0.0;
+	f->julia_x = 0.0;
 }
 
-// Updated fractal_init: Set fractal parameters only.
-// void fractal_init(t_fractal *fractal, char **argv)
-// {
-//     fractal->max_iterations = 100;
-//     fractal->min_x = -2.0;
-//     fractal->max_x = 2.0;
-//     fractal->min_y = -2.0;
-//     fractal->max_y = 2.0;
-//     fractal->widht = 1000;  // (Consider renaming to "width" for clarity)
-//     fractal->height = 1000;
-//     fractal->shift_x = 0.0;
-//     fractal->shift_y = 0.0;
-//     fractal->col = 0;  // default color offset
-
-//     if (fractal->type == 1)  // Mandelbrot
-//     {
-//         // Mandelbrot specific initialization if needed
-//     }
-//     else if (fractal->type == 2)  // Julia
-//     {
-//         fractal->julia_x = ft_atodbl(argv[2]);
-//         fractal->julia_y = ft_atodbl(argv[3]);
-//     }
-//     else
-//     {
-//         ft_putstr_fd("Invalid fractal type\n", STDERR_FILENO);
-//         exit(EXIT_FAILURE);
-//     }
-// }
-
+void	fractal_init(t_fractal *f, char **argv)
+{
+	set_defaults(f);
+	if (!f)
+		return ;
+	if (f->type == 1)
+		f->x = -0.5;
+	else if (f->type == 2)
+	{
+		if (!argv[2] || !argv[3] || !is_valid_number(argv[2])
+			|| !is_valid_number(argv[3]))
+		{
+			ft_printf("Error: Invalid or missing Julia parameters\n");
+			exit(2);
+		}
+		f->julia_x = ft_atodbl(argv[2]);
+		f->julia_y = ft_atodbl(argv[3]);
+	}
+	else if (f->type == 3)
+		f->x = -0.5;
+	else
+	{
+		ft_printf("Error: Unknown fractal type\n");
+		printf("%d\n", f->type);
+		exit(2);
+	}
+}

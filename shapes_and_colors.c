@@ -6,7 +6,7 @@
 /*   By: roalexan <roalexan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 16:22:57 by roalexan          #+#    #+#             */
-/*   Updated: 2025/03/22 21:11:10 by roalexan         ###   ########.fr       */
+/*   Updated: 2025/03/23 20:06:15 by roalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,24 @@ void	color_image(mlx_image_t *img)
 	}
 }
 
-void	ft_zoom(t_fractal *f, double	zoom)
+void	ft_zoom(t_fractal *f, double zoom, double mouse_cy)
 {
 	int32_t	mouse_x;
 	int32_t	mouse_y;
-	double			mouse_cx;
-	double			mouse_cy;
+	double	mouse_cx;
+	double	new_x_range;
+	double	new_y_range;
 
 	mlx_get_mouse_pos(f->mlx, &mouse_x, &mouse_y);
-	mouse_cx = f->min_x + (f->max_x - f->min_x) * (mouse_x / (double)WIDTH);
-	mouse_cy = f->min_y + (f->max_y - f->min_y) * (mouse_y / (double)HEIGHT);
-	f->min_x = mouse_cx - (mouse_cx - f->min_x) / zoom;
-	f->max_x = mouse_cx + (f->max_x - mouse_cx) / zoom;
-	f->min_y = mouse_cy - (mouse_cy - f->min_y) / zoom;
-	f->max_y = mouse_cy + (f->max_y - mouse_cy) / zoom;
-	f->col = 1;
+	mouse_cx = f->min_x + (f->max_x - f->min_x) * (mouse_x / (double)f->widht);
+	mouse_cy = f->min_y + (f->max_y - f->min_y) * (mouse_y / (double)f->height);
+	new_x_range = (f->max_x - f->min_x) / zoom;
+	new_y_range = (f->max_y - f->min_y) / zoom;
+	f->min_x = mouse_cx - ((mouse_cx - f->min_x) / zoom);
+	f->max_x = f->min_x + new_x_range;
+	f->min_y = mouse_cy - ((mouse_cy - f->min_y) / zoom);
+	f->max_y = f->min_y + new_y_range;
 	fractal_render(f);
-	// color_image(fractal->img);
 }
 
 int	window(t_fractal *fractal)
@@ -65,8 +66,5 @@ int	window(t_fractal *fractal)
 	mlx_image_to_window(fractal->mlx, fractal->img, 0, 0);
 	mlx_loop_hook(fractal->mlx, &event_key, fractal);
 	mlx_scroll_hook(fractal->mlx, &mouse_scroll, fractal);
-	// INTERRUPTS the program at the exact time the key is pressed
-	// mlx_loop_hook(fractal->mlx, &my_loop,fractal);	// gets executed ONCE EVERY LOOP. no interrupt.1
 	return (0);
 }
-

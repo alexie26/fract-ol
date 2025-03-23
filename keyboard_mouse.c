@@ -6,13 +6,13 @@
 /*   By: roalexan <roalexan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 20:54:48 by roalexan          #+#    #+#             */
-/*   Updated: 2025/03/22 21:13:57 by roalexan         ###   ########.fr       */
+/*   Updated: 2025/03/23 20:01:03 by roalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	  function(void *param)
+void	function(void *param)
 {
 	t_fractal	*f;
 
@@ -43,11 +43,10 @@ void	  function(void *param)
 
 void	event_key(void *param)
 {
-	function(param);
 	t_fractal	*f;
 
+	function(param);
 	f = (t_fractal *)param;
-
 	if (mlx_is_key_down(f->mlx, MLX_KEY_KP_ADD))
 	{
 		f->max_iterations += 10;
@@ -64,19 +63,23 @@ void	event_key(void *param)
 		fractal_render(f);
 	}
 }
-//mouse scroll 
+
 void	mouse_scroll(double xd, double yd, void *param)
 {
-	t_fractal *f;
-	double	zoom;
+	t_fractal	*f;
+	double		zoom;
+	int32_t		mouse_x;
+	int32_t		mouse_y;
+
 	(void)xd;
 	f = (t_fractal *)param;
+	mlx_get_mouse_pos(f->mlx, &mouse_x, &mouse_y);
 	if (yd > 0)
-		zoom =  1.1;
+		zoom = 1.1;
 	else if (yd < 0)
 		zoom = 0.9;
 	else
-		return;
-	ft_zoom(f, zoom);
+		return ;
+	ft_zoom(f, zoom, 0);
 	fractal_render(f);
 }
